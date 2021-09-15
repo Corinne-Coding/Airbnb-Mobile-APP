@@ -1,49 +1,61 @@
-// In App.js in a new project
+import React, { useState, useMemo, useEffect } from "react";
 
-import React, { useState, useMemo } from "react";
+// Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const RoomsStack = createNativeStackNavigator();
+const TabsStack = createBottomTabNavigator();
 const AuthStack = createNativeStackNavigator();
+const LodgingStack = createNativeStackNavigator();
 
 // Context
 import { AuthContext } from "./context";
 
-// Connection screens
+// Screens
 import SignInScreen from "./screens/connection/SignInScreen";
 import SignUpScreen from "./screens/connection/SignUpScreen";
-
-// Tabs screens
 import HomeScreen from "./screens/tabs/HomeScreen";
 import ProfileScreen from "./screens/tabs/ProfileScreen";
 import FavoritesScreen from "./screens/tabs/FavoritesScreen";
 import RoomScreen from "./screens/tabs/RoomScreen";
 import AroundMeScreen from "./screens/tabs/AroundMeScreen";
-
-// Other Screens
+import LodgingsScreen from "./screens/tabs/LodgingsScreen";
+import UpdateLodgingScreen from "./screens/tabs/UpdateLodgingScreen";
 import SplashScreen from "./screens/SplashScreen";
 
+// Other Packages
+import * as SecureStore from "expo-secure-store";
+
 const App = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
 
   const authContext = useMemo(() => {
     return {
-      signIn: () => {
-        setIsLoading(false);
-        setUserToken("toto");
-      },
-      signUp: () => {
-        setIsLoading(false);
-        setUserToken("toto");
-      },
-      signOut: () => {
-        setIsLoading(false);
-        setUserToken(null);
+      handleToken: async (token) => {
+        if (token) {
+          await SecureStore.setItemAsync("airbnb-user-token", token);
+          setUserToken(token);
+        } else {
+          await SecureStore.deleteItemAsync("airbnb-user-token");
+          setUserToken(null);
+        }
       },
     };
+  }, []);
+
+  useEffect(() => {
+    const checkTokenInSecureStore = async () => {
+      const result = await SecureStore.getItemAsync("airbnb-user-token");
+      console.log("TOKEN IN SECURE STORE =>", result);
+      setUserToken(result);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    };
+
+    checkTokenInSecureStore();
   }, []);
 
   if (isLoading) {
@@ -57,28 +69,47 @@ const App = () => {
     </AuthStack.Navigator>
   );
 
-  const TabsScreen = () => (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Home" component={RoomsStackScreen} />
-      <Tab.Screen name="Around me" component={AroundMeScreen} />
-      <Tab.Screen name="Favorites" component={FavoritesScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
+  const TabsStackScreen = () => (
+    <TabsStack.Navigator screenOptions={{ headerShown: false }}>
+      <TabsStack.Screen name="Home" component={RoomsStackScreen} />
+      <TabsStack.Screen name="AroundMe" component={AroundStackScreen} />
+      <TabsStack.Screen name="Favorites" component={FavoritesScreen} />
+      <TabsStack.Screen name="Lodgings" component={LodgingStackScreen} />
+      <TabsStack.Screen name="Profile" component={ProfileScreen} />
+    </TabsStack.Navigator>
   );
 
   const RoomsStackScreen = () => {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="Rooms" component={HomeScreen} />
-        <Stack.Screen name="Room" component={RoomScreen} />
-      </Stack.Navigator>
+      <RoomsStack.Navigator>
+        <RoomsStack.Screen name="Rooms" component={HomeScreen} />
+        <RoomsStack.Screen name="Room" component={RoomScreen} />
+      </RoomsStack.Navigator>
+    );
+  };
+
+  const AroundStackScreen = () => {
+    return (
+      <RoomsStack.Navigator>
+        <RoomsStack.Screen name="Map" component={AroundMeScreen} />
+        <RoomsStack.Screen name="RoomAround" component={RoomScreen} />
+      </RoomsStack.Navigator>
+    );
+  };
+
+  const LodgingStackScreen = () => {
+    return (
+      <LodgingStack.Navigator>
+        <LodgingStack.Screen name="List" component={LodgingsScreen} />
+        <LodgingStack.Screen name="Update" component={UpdateLodgingScreen} />
+      </LodgingStack.Navigator>
     );
   };
 
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {userToken ? <TabsScreen /> : <AuthStackScreen />}
+        {userToken ? <TabsStackScreen /> : <AuthStackScreen />}
       </NavigationContainer>
     </AuthContext.Provider>
   );

@@ -5,7 +5,7 @@ import { View, Text, Button } from "react-native";
 import { AuthContext } from "../../context";
 
 const ProfileScreen = () => {
-  const { signOut } = useContext(AuthContext);
+  const { handleToken } = useContext(AuthContext);
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -13,7 +13,7 @@ const ProfileScreen = () => {
       <Button
         title="sugn out"
         onPress={() => {
-          signOut();
+          handleToken();
         }}
       />
     </View>

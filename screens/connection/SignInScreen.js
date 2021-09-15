@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context";
 
 const SignInScreen = () => {
-  const { signIn } = useContext(AuthContext);
+  const { handleToken } = useContext(AuthContext);
   const navigation = useNavigation();
 
   return (
@@ -15,7 +15,7 @@ const SignInScreen = () => {
       <Button
         title="log in"
         onPress={() => {
-          signIn();
+          handleToken("toto");
         }}
       />
 
