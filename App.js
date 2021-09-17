@@ -30,6 +30,7 @@ import * as SecureStore from "expo-secure-store";
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const authContext = useMemo(() => {
     return {
@@ -40,6 +41,16 @@ const App = () => {
         } else {
           await SecureStore.deleteItemAsync("airbnb-user-token");
           setUserToken(null);
+        }
+      },
+
+      handleId: async (id) => {
+        if (id) {
+          await SecureStore.setItemAsync("airbnb-user-id", id);
+          setUserId(id);
+        } else {
+          await SecureStore.deleteItemAsync("airbnb-user-id");
+          setUserId(null);
         }
       },
     };
@@ -63,7 +74,11 @@ const App = () => {
   }
 
   const AuthStackScreen = () => (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <AuthStack.Screen name="SignIn" component={SignInScreen} />
       <AuthStack.Screen name="SignUp" component={SignUpScreen} />
     </AuthStack.Navigator>

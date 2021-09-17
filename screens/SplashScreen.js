@@ -2,15 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 // Colors
-import colors from "../assets/colors";
-const {
-  darkGrey,
-  lightGrey,
-  mediumGrey,
-  pinkAirbnb,
-  placeholderColor,
-  bgColor,
-} = colors;
+import colors from "../utils/colors";
 
 // Components
 import Logo from "../components/Logo";
@@ -29,12 +21,12 @@ export default SplashScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: bgColor,
+    backgroundColor: colors.whiteColor,
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
-    color: pinkAirbnb,
+    color: colors.pinkAirbnb,
     fontWeight: "bold",
     fontSize: 16,
     marginTop: 30,

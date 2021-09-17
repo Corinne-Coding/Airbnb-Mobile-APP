@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  Dimensions,
   Image,
   FlatList,
   StyleSheet,
@@ -10,10 +11,18 @@ import {
   View,
 } from "react-native";
 
-const Logo = ({ withName }) => {
+const Logo = ({ withName, size }) => {
   return (
     <Image
-      style={styles.img}
+      style={
+        size === "large"
+          ? styles.largeImage
+          : size === "medium"
+          ? styles.mediumImage
+          : size === "small"
+          ? styles.smallImage
+          : styles.defaultSize
+      }
       source={
         withName
           ? require("../assets/images/logo-and-name.jpeg")
@@ -27,7 +36,16 @@ const Logo = ({ withName }) => {
 export default Logo;
 
 const styles = StyleSheet.create({
-  img: {
+  defaultSize: {
+    height: 200,
+  },
+  largeImage: {
     height: 250,
+  },
+  mediumImage: {
+    height: 80,
+  },
+  smallImage: {
+    height: 30,
   },
 });
