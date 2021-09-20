@@ -71,6 +71,8 @@ const SignUpScreen = () => {
               if (response.data.token && response.data._id) {
                 handleToken(response.data.token);
                 handleId(response.data._id);
+              } else {
+                setCodeError(5);
               }
             } catch (error) {
               if (

@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   },
   mediumImage: {
     height: 80,
+    marginTop: 30,
   },
   smallImage: {
     height: 30,

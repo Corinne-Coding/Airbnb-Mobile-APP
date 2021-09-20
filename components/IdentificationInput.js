@@ -31,10 +31,10 @@ export default IdentificationInput;
 const styles = StyleSheet.create({
   textInput: {
     height: 30,
-    width: "80%",
     borderBottomColor: colors.pinkAirbnb,
     borderBottomWidth: 1,
     fontSize: 16,
     marginVertical: 20,
+    width: "80%",
   },
 });
