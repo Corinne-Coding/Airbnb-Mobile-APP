@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 50,
     marginHorizontal: 20,
+    width: "80%",
   },
   text: {
     color: colors.pinkAirbnb,

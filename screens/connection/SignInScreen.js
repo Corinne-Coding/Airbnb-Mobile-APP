@@ -15,7 +15,6 @@ import colors from "../../utils/colors";
 import ScreenTitle from "../../components/ScreenTitle";
 import Logo from "../../components/Logo";
 import IdentificationInput from "../../components/IdentificationInput";
-import LargeInput from "../../components/LargeInput";
 import PasswordInput from "../../components/PasswordInput";
 import ErrorMessage from "../../components/ErrorMessage";
 import ConnectionButton from "../../components/ConnectionButton";
@@ -28,11 +27,13 @@ const SignInScreen = () => {
   const [password, setPassword] = useState("passss");
   const [showPasswordIcon, setShowPasswordIcon] = useState(false);
   const [codeError, setCodeError] = useState(1);
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
 
   const handleSubmit = async () => {
     if (email && password) {
       // check if fields are filled
       setCodeError(0);
+      setIsRequestLoading(true);
       try {
         // request
         const response = await axios.post("http://localhost:3000/user/log_in", {
@@ -46,7 +47,9 @@ const SignInScreen = () => {
         } else {
           setCodeError(5);
         }
+        setIsRequestLoading(false);
       } catch (error) {
+        setIsRequestLoading(false);
         if (error.response.status === 401) {
           setCodeError(3);
         } else {
@@ -87,8 +90,16 @@ const SignInScreen = () => {
 
         <View style={styles.view}>
           <ErrorMessage codeError={codeError} />
-          <ConnectionButton text="Log in" submitFunction={handleSubmit} />
-          <RedirectButton text="No account ? Register" screenName="SignUp" />
+          <ConnectionButton
+            text="Log in"
+            submitFunction={handleSubmit}
+            isRequestLoading={isRequestLoading}
+          />
+          <RedirectButton
+            text="No account ? Register"
+            screenName="SignUp"
+            isRequestLoading={isRequestLoading}
+          />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

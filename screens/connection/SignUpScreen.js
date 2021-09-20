@@ -36,6 +36,7 @@ const SignUpScreen = () => {
   const [showPasswordIcon1, setShowPasswordIcon1] = useState(false);
   const [showPasswordIcon2, setShowPasswordIcon2] = useState(false);
   const [codeError, setCodeError] = useState(1);
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
 
   const handleSubmit = async () => {
     // check if fields are filled
@@ -55,6 +56,7 @@ const SignUpScreen = () => {
           // check password & confirmPassword
           if (password === confirmPassword) {
             setCodeError(0);
+            setIsRequestLoading(true);
             try {
               // request
               const response = await axios.post(
@@ -74,7 +76,9 @@ const SignUpScreen = () => {
               } else {
                 setCodeError(5);
               }
+              setIsRequestLoading(false);
             } catch (error) {
+              setIsRequestLoading(false);
               if (
                 error.response.data.error ===
                   "This email already has an account." ||
@@ -157,11 +161,16 @@ const SignUpScreen = () => {
 
         <ErrorMessage codeError={codeError} />
 
-        <ConnectionButton text="Sign up" submitFunction={handleSubmit} />
+        <ConnectionButton
+          text="Sign up"
+          submitFunction={handleSubmit}
+          isRequestLoading={isRequestLoading}
+        />
 
         <RedirectButton
           text="Already have an account ? Log in"
           screenName="SignIn"
+          isRequestLoading={isRequestLoading}
         />
       </KeyboardAwareScrollView>
     </SafeAreaView>
