@@ -9,8 +9,9 @@ const TabsStack = createBottomTabNavigator();
 const AuthStack = createNativeStackNavigator();
 const LodgingStack = createNativeStackNavigator();
 
-// Context
+// Contexts
 import { AuthContext } from "./context";
+import { UrlApiContext } from "./context";
 
 // Screens
 import SignInScreen from "./screens/connection/SignInScreen";
@@ -31,6 +32,13 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
   const [userId, setUserId] = useState(null);
+
+  const urlContext = useMemo(() => {
+    return {
+      url: "http://localhost:3000/",
+      // url: "https://airbnb-api-corinne.herokuapp.com/",
+    };
+  });
 
   const authContext = useMemo(() => {
     return {
@@ -122,11 +130,13 @@ const App = () => {
   };
 
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        {userToken ? <TabsStackScreen /> : <AuthStackScreen />}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <UrlApiContext.Provider value={urlContext}>
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer>
+          {userToken ? <TabsStackScreen /> : <AuthStackScreen />}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </UrlApiContext.Provider>
   );
 };
 

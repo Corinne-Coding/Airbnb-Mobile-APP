@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Constants from "expo-constants";
 import axios from "axios";
 
-// Context
+// Contexts
 import { AuthContext } from "../../context";
+import { UrlApiContext } from "../../context";
 
 // Colors
 import colors from "../../utils/colors";
@@ -22,9 +23,10 @@ import RedirectButton from "../../components/RedirectButton";
 
 const SignInScreen = () => {
   const { handleToken, handleId } = useContext(AuthContext);
+  const { url } = useContext(UrlApiContext);
 
-  const [email, setEmail] = useState("eric@gmail.com");
-  const [password, setPassword] = useState("passss");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPasswordIcon, setShowPasswordIcon] = useState(false);
   const [codeError, setCodeError] = useState(1);
   const [isRequestLoading, setIsRequestLoading] = useState(false);
@@ -36,11 +38,11 @@ const SignInScreen = () => {
       setIsRequestLoading(true);
       try {
         // request
-        const response = await axios.post("http://localhost:3000/user/log_in", {
+        const response = await axios.post(`${url}user/log_in`, {
           email: email,
           password: password,
         });
-
+        console.log(response.data);
         if (response.data.token && response.data._id) {
           handleToken(response.data.token);
           handleId(response.data._id);

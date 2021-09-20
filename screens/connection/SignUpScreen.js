@@ -5,8 +5,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Constants from "expo-constants";
 import axios from "axios";
 
-// Context
+// Contexts
 import { AuthContext } from "../../context";
+import { UrlApiContext } from "../../context";
 
 // Colors
 import colors from "../../utils/colors";
@@ -26,6 +27,7 @@ import validateEmailFormat from "../../utils/functions/validateEmailFormat";
 
 const SignUpScreen = () => {
   const { handleToken, handleId } = useContext(AuthContext);
+  const { url } = useContext(UrlApiContext);
 
   const [email, setEmail] = useState("");
   const [userName, setUsername] = useState("");
@@ -59,16 +61,13 @@ const SignUpScreen = () => {
             setIsRequestLoading(true);
             try {
               // request
-              const response = await axios.post(
-                "http://localhost:3000/user/sign_up",
-                {
-                  email,
-                  username: userName,
-                  name,
-                  description,
-                  password,
-                }
-              );
+              const response = await axios.post(`${url}user/sign_up`, {
+                email,
+                username: userName,
+                name,
+                description,
+                password,
+              });
 
               if (response.data.token && response.data._id) {
                 handleToken(response.data.token);
