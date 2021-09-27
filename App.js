@@ -28,6 +28,17 @@ import SplashScreen from "./screens/SplashScreen";
 // Other Packages
 import * as SecureStore from "expo-secure-store";
 
+// Icons
+import {
+  Entypo,
+  FontAwesome5,
+  AntDesign,
+  FontAwesome,
+} from "@expo/vector-icons";
+
+// Colors
+import colors from "./utils/colors";
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
@@ -35,7 +46,7 @@ const App = () => {
 
   const urlContext = useMemo(() => {
     return {
-      url: "http://localhost:3000/",
+      url: "http://192.168.1.12:3000/",
       // url: "https://airbnb-api-corinne.herokuapp.com/",
     };
   });
@@ -93,12 +104,63 @@ const App = () => {
   );
 
   const TabsStackScreen = () => (
-    <TabsStack.Navigator screenOptions={{ headerShown: false }}>
-      <TabsStack.Screen name="Home" component={RoomsStackScreen} />
-      <TabsStack.Screen name="AroundMe" component={AroundStackScreen} />
-      <TabsStack.Screen name="Favorites" component={FavoritesScreen} />
-      <TabsStack.Screen name="Lodgings" component={LodgingStackScreen} />
-      <TabsStack.Screen name="Profile" component={ProfileScreen} />
+    <TabsStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.pinkAirbnb,
+        tabBarInactiveTintColor: colors.darkGrey,
+      }}
+    >
+      <TabsStack.Screen
+        name="Home"
+        component={RoomsStackScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <TabsStack.Screen
+        name="AroundMe"
+        component={AroundStackScreen}
+        options={{
+          tabBarLabel: "Around me",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="map-marker-alt" size={size} color={color} />
+          ),
+        }}
+      />
+      <TabsStack.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="star" size={size} color={color} />
+          ),
+        }}
+      />
+      <TabsStack.Screen
+        name="Lodgings"
+        component={LodgingStackScreen}
+        options={{
+          tabBarLabel: "My rooms",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="th-list" size={size} color={color} />
+          ),
+        }}
+      />
+      <TabsStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="user" size={size} color={color} />
+          ),
+        }}
+      />
     </TabsStack.Navigator>
   );
 
