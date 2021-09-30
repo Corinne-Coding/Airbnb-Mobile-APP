@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import colors from "../utils/colors";
 
-function Rating({ number, text }) {
+function Rating({ number, text, color }) {
   const generateStars = (number) => {
     let starsArray = [];
     for (let i = 0; i < 5; i++) {
@@ -20,7 +21,9 @@ function Rating({ number, text }) {
   return (
     <View style={styles.ratingView}>
       <View style={styles.starIcons}>{generateStars(number)}</View>
-      <Text style={styles.ratingText}>{text} reviews</Text>
+      <Text style={color === "dark" ? styles.dark : styles.light}>
+        {text} reviews
+      </Text>
     </View>
   );
 }
@@ -36,7 +39,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  ratingText: {
-    color: "grey",
+  light: {
+    color: colors.greyText,
+  },
+  dark: {
+    color: colors.black,
   },
 });

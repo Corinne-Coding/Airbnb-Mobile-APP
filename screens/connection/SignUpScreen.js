@@ -29,15 +29,15 @@ const SignUpScreen = () => {
   const { handleToken, handleId } = useContext(AuthContext);
   const { url } = useContext(UrlApiContext);
 
-  const [email, setEmail] = useState("   PRADier.Corinne@gMail.com    ");
-  const [userName, setUsername] = useState("Corinne");
-  const [name, setName] = useState("Corinne");
-  const [description, setDescription] = useState("coucou");
-  const [password, setPassword] = useState("passss");
-  const [confirmPassword, setConfirmPassword] = useState("passss");
+  const [email, setEmail] = useState("");
+  const [userName, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPasswordIcon1, setShowPasswordIcon1] = useState(false);
   const [showPasswordIcon2, setShowPasswordIcon2] = useState(false);
-  const [codeError, setCodeError] = useState(1);
+  const [codeError, setCodeError] = useState(0);
   const [isRequestLoading, setIsRequestLoading] = useState(false);
 
   const handleSubmit = async () => {

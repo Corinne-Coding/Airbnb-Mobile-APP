@@ -28,11 +28,10 @@ const SignInScreen = () => {
   const [email, setEmail] = useState("Pradier.corinne@gmail.com ");
   const [password, setPassword] = useState("passss");
   const [showPasswordIcon, setShowPasswordIcon] = useState(false);
-  const [codeError, setCodeError] = useState(1);
+  const [codeError, setCodeError] = useState(0);
   const [isRequestLoading, setIsRequestLoading] = useState(false);
 
   const handleSubmit = async () => {
-    console.log(url);
     if (email && password) {
       // check if fields are filled
       setCodeError(0);
@@ -43,7 +42,7 @@ const SignInScreen = () => {
           email: email,
           password: password,
         });
-        console.log(response.data);
+
         if (response.data.token && response.data._id) {
           handleToken(response.data.token);
           handleId(response.data._id);

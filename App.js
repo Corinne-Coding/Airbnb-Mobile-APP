@@ -7,7 +7,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const RoomsStack = createNativeStackNavigator();
 const TabsStack = createBottomTabNavigator();
 const AuthStack = createNativeStackNavigator();
-const LodgingStack = createNativeStackNavigator();
 
 // Contexts
 import { AuthContext } from "./context";
@@ -21,8 +20,6 @@ import ProfileScreen from "./screens/tabs/ProfileScreen";
 import FavoritesScreen from "./screens/tabs/FavoritesScreen";
 import RoomScreen from "./screens/tabs/RoomScreen";
 import AroundMeScreen from "./screens/tabs/AroundMeScreen";
-import LodgingsScreen from "./screens/tabs/LodgingsScreen";
-import UpdateLodgingScreen from "./screens/tabs/UpdateLodgingScreen";
 import SplashScreen from "./screens/SplashScreen";
 
 // Other Packages
@@ -135,22 +132,13 @@ const App = () => {
         name="Favorites"
         component={FavoritesScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Favorites",
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="star" size={size} color={color} />
           ),
         }}
       />
-      <TabsStack.Screen
-        name="Lodgings"
-        component={LodgingStackScreen}
-        options={{
-          tabBarLabel: "My rooms",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="th-list" size={size} color={color} />
-          ),
-        }}
-      />
+
       <TabsStack.Screen
         name="Profile"
         component={ProfileScreen}
@@ -179,15 +167,6 @@ const App = () => {
         <RoomsStack.Screen name="Map" component={AroundMeScreen} />
         <RoomsStack.Screen name="RoomAround" component={RoomScreen} />
       </RoomsStack.Navigator>
-    );
-  };
-
-  const LodgingStackScreen = () => {
-    return (
-      <LodgingStack.Navigator>
-        <LodgingStack.Screen name="List" component={LodgingsScreen} />
-        <LodgingStack.Screen name="Update" component={UpdateLodgingScreen} />
-      </LodgingStack.Navigator>
     );
   };
 

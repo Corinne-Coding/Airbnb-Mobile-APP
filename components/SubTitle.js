@@ -4,22 +4,18 @@ import { StyleSheet, Text } from "react-native";
 // Colors
 import colors from "../utils/colors";
 
-const Title = ({ title }) => {
-  return (
-    <Text style={styles.text} numberOfLines={1}>
-      {title}
-    </Text>
-  );
+const SubTitle = ({ title }) => {
+  return <Text style={styles.text}>{title}</Text>;
 };
 
-export default Title;
+export default SubTitle;
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
-    lineHeight: 20,
+    fontSize: 14,
+    lineHeight: 28,
     fontWeight: "bold",
     color: colors.darkGrey,
-    marginBottom: 15,
+    fontStyle: "italic",
   },
 });

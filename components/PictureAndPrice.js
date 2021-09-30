@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 
-const BackgroundPicture = ({ url, price }) => {
+const PictureAndPrice = ({ url, price }) => {
   return (
     <ImageBackground
       style={styles.image}
@@ -21,7 +21,7 @@ const BackgroundPicture = ({ url, price }) => {
   );
 };
 
-export default BackgroundPicture;
+export default PictureAndPrice;
 
 const styles = StyleSheet.create({
   image: {
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 20,
+    marginLeft: -20,
   },
   price: {
     color: "white",
