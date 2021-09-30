@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { StatusBar } from "expo-status-bar";
 import Constants from "expo-constants";
 import axios from "axios";
@@ -9,24 +9,24 @@ import axios from "axios";
 import { AuthContext } from "../../context";
 import { UrlApiContext } from "../../context";
 
+// Components
+import ConnectionButton from "../../components/ConnectionButton";
+import ErrorMessage from "../../components/ErrorMessage";
+import IdentificationInput from "../../components/IdentificationInput";
+import Logo from "../../components/Logo";
+import PasswordInput from "../../components/PasswordInput";
+import RedirectButton from "../../components/RedirectButton";
+import ScreenTitle from "../../components/ScreenTitle";
+
 // Colors
 import colors from "../../utils/colors";
 
-// Components
-import ScreenTitle from "../../components/ScreenTitle";
-import Logo from "../../components/Logo";
-import IdentificationInput from "../../components/IdentificationInput";
-import PasswordInput from "../../components/PasswordInput";
-import ErrorMessage from "../../components/ErrorMessage";
-import ConnectionButton from "../../components/ConnectionButton";
-import RedirectButton from "../../components/RedirectButton";
-
 const SignInScreen = () => {
-  const { handleToken, handleId } = useContext(AuthContext);
+  const { handleId, handleToken } = useContext(AuthContext);
   const { url } = useContext(UrlApiContext);
 
-  const [email, setEmail] = useState("Pradier.corinne@gmail.com ");
-  const [password, setPassword] = useState("passss");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPasswordIcon, setShowPasswordIcon] = useState(false);
   const [codeError, setCodeError] = useState(0);
   const [isRequestLoading, setIsRequestLoading] = useState(false);

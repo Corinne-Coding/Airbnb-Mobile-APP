@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Platform, SafeAreaView, StyleSheet } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StatusBar } from "expo-status-bar";
 import Constants from "expo-constants";
 import axios from "axios";
 
@@ -9,24 +9,24 @@ import axios from "axios";
 import { AuthContext } from "../../context";
 import { UrlApiContext } from "../../context";
 
-// Colors
-import colors from "../../utils/colors";
-
 // Components
-import ScreenTitle from "../../components/ScreenTitle";
-import Logo from "../../components/Logo";
+import ConnectionButton from "../../components/ConnectionButton";
+import ErrorMessage from "../../components/ErrorMessage";
 import IdentificationInput from "../../components/IdentificationInput";
 import LargeInput from "../../components/LargeInput";
+import Logo from "../../components/Logo";
 import PasswordInput from "../../components/PasswordInput";
-import ErrorMessage from "../../components/ErrorMessage";
-import ConnectionButton from "../../components/ConnectionButton";
 import RedirectButton from "../../components/RedirectButton";
+import ScreenTitle from "../../components/ScreenTitle";
 
 // Functions
 import validateEmailFormat from "../../utils/functions/validateEmailFormat";
 
+// Colors
+import colors from "../../utils/colors";
+
 const SignUpScreen = () => {
-  const { handleToken, handleId } = useContext(AuthContext);
+  const { handleId, handleToken } = useContext(AuthContext);
   const { url } = useContext(UrlApiContext);
 
   const [email, setEmail] = useState("");

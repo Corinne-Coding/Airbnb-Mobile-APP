@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import * as SecureStore from "expo-secure-store";
 
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,25 +14,16 @@ import { AuthContext } from "./context";
 import { UrlApiContext } from "./context";
 
 // Screens
-import SignInScreen from "./screens/connection/SignInScreen";
-import SignUpScreen from "./screens/connection/SignUpScreen";
+import AroundMeScreen from "./screens/tabs/AroundMeScreen";
 import HomeScreen from "./screens/tabs/HomeScreen";
 import ProfileScreen from "./screens/tabs/ProfileScreen";
-import FavoritesScreen from "./screens/tabs/FavoritesScreen";
 import RoomScreen from "./screens/tabs/RoomScreen";
-import AroundMeScreen from "./screens/tabs/AroundMeScreen";
+import SignInScreen from "./screens/connection/SignInScreen";
+import SignUpScreen from "./screens/connection/SignUpScreen";
 import SplashScreen from "./screens/SplashScreen";
 
-// Other Packages
-import * as SecureStore from "expo-secure-store";
-
 // Icons
-import {
-  Entypo,
-  FontAwesome5,
-  AntDesign,
-  FontAwesome,
-} from "@expo/vector-icons";
+import { Entypo, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 
 // Colors
 import colors from "./utils/colors";
@@ -75,7 +67,6 @@ const App = () => {
   useEffect(() => {
     const checkTokenInSecureStore = async () => {
       const result = await SecureStore.getItemAsync("airbnb-user-token");
-      console.log("TOKEN IN SECURE STORE =>", result);
       setUserToken(result);
       setTimeout(() => {
         setIsLoading(false);
@@ -125,16 +116,6 @@ const App = () => {
           tabBarLabel: "Around me",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="map-marker-alt" size={size} color={color} />
-          ),
-        }}
-      />
-      <TabsStack.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={{
-          tabBarLabel: "Favorites",
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="star" size={size} color={color} />
           ),
         }}
       />

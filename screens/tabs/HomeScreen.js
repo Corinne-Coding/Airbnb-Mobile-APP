@@ -1,12 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useContext, useState } from "react";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
 // Contexts
@@ -31,22 +25,25 @@ function RoomsScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [codeError, setCodeError] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setCodeError(0);
-      try {
-        const response = await axios.get(`${url}rooms`);
-        setData(response.data);
-        setTimeout(() => {
+  useFocusEffect(
+    useCallback(() => {
+      const fetchData = async () => {
+        setCodeError(0);
+        try {
+          const response = await axios.get(`${url}rooms`);
+          setData(response.data);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 200);
+        } catch (error) {
+          setCodeError(7);
           setIsLoading(false);
-        }, 200);
-      } catch (error) {
-        setCodeError(7);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+        }
+      };
+
+      fetchData();
+    }, [])
+  );
 
   return isLoading ? (
     <LottieView />
@@ -55,49 +52,43 @@ function RoomsScreen() {
       <ErrorMessage codeError={codeError} />
     </View>
   ) : (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => String(item._id)}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            style={
-              index !== data.length - 1
-                ? [styles.item, styles.bottomBorder]
-                : [styles.item]
-            }
-            onPress={() => {
-              navigation.navigate("Room", {
-                roomId: item._id,
-              });
-            }}
-          >
-            <PictureAndPrice url={item.photos[0].url} price={item.price} />
-            <View style={styles.detailsView}>
-              <View style={styles.textsContainer}>
-                <Title title={item.title} />
-                <Rating number={item.ratingValue} text={item.reviews} />
-              </View>
-
-              <Picture url={item.user.account.photo.url} mode="circle" />
+    <FlatList
+      data={data}
+      keyExtractor={(item) => String(item._id)}
+      renderItem={({ item, index }) => (
+        <TouchableOpacity
+          style={
+            index !== data.length - 1
+              ? [styles.item, styles.bottomBorder]
+              : [styles.item]
+          }
+          onPress={() => {
+            navigation.navigate("Room", {
+              roomId: item._id,
+            });
+          }}
+        >
+          <PictureAndPrice url={item.photos[0].url} price={item.price} />
+          <View style={styles.detailsView}>
+            <View style={styles.textsContainer}>
+              <Title title={item.title} />
+              <Rating number={item.ratingValue} text={item.reviews} />
             </View>
-          </TouchableOpacity>
-        )}
-      ></FlatList>
-    </SafeAreaView>
+
+            <Picture url={item.user.account.photo.url} mode="circle" />
+          </View>
+        </TouchableOpacity>
+      )}
+    ></FlatList>
   );
 }
 
 export default RoomsScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: colors.whiteColor,
-  },
   errorContainer: {
     alignItems: "center",
+    backgroundColor: colors.whiteColor,
   },
   item: {
     marginHorizontal: 10,

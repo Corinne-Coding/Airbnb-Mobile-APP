@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -6,10 +6,9 @@ import {
   Text,
   ActivityIndicator,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
 } from "react-native";
-import { useRoute } from "@react-navigation/core";
+import { useRoute, useFocusEffect } from "@react-navigation/core";
 import axios from "axios";
 import Swiper from "react-native-swiper";
 import MapView from "react-native-maps";
@@ -40,21 +39,23 @@ const RoomScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [codeError, setCodeError] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setCodeError(0);
-      try {
-        const response = await axios.get(`${url}rooms/${roomId}`);
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        setCodeError(7);
-        setIsLoading(false);
-      }
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const fetchData = async () => {
+        setCodeError(0);
+        try {
+          const response = await axios.get(`${url}rooms/${roomId}`);
+          setData(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          setCodeError(7);
+          setIsLoading(false);
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }, [])
+  );
 
   return isLoading ? (
     <ActivityIndicator
@@ -67,90 +68,85 @@ const RoomScreen = () => {
       <ErrorMessage codeError={codeError} />
     </View>
   ) : (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <MainTitle title={data.title} />
+    <ScrollView contentContainerStyle={styles.scrollView}>
+      <MainTitle title={data.title} />
 
-        <View style={{ height: 300 }}>
-          <Swiper
-            showsButtons={false}
-            horizontal={true}
-            showsPagination={true}
-            activeDotColor={colors.pinkAirbnb}
-            dotStyle={{ width: 10, height: 10, borderRadius: 5 }}
-            activeDotStyle={{ width: 10, height: 10, borderRadius: 5 }}
-          >
-            {data.photos.map((photo) => {
-              return (
-                <Image
-                  key={photo.picture_id}
-                  style={styles.swiperImage}
-                  source={{ uri: photo.url }}
-                />
-              );
-            })}
-          </Swiper>
-        </View>
+      <View style={{ height: 300 }}>
+        <Swiper
+          showsButtons={false}
+          horizontal={true}
+          showsPagination={true}
+          activeDotColor={colors.pinkAirbnb}
+          dotStyle={{ width: 10, height: 10, borderRadius: 5 }}
+          activeDotStyle={{ width: 10, height: 10, borderRadius: 5 }}
+        >
+          {data.photos.map((photo) => {
+            return (
+              <Image
+                key={photo.picture_id}
+                style={styles.swiperImage}
+                source={{ uri: photo.url }}
+              />
+            );
+          })}
+        </Swiper>
+      </View>
 
-        <Price price={data.price} />
+      <Price price={data.price} />
 
-        <View style={styles.detailsContainer}>
-          <Title title="About the accommodation" />
-          <BlockText text={data.description} />
-          <Rating text={data.reviews} number={data.ratingValue} color="dark" />
-        </View>
+      <View style={styles.detailsContainer}>
+        <Title title="About the accommodation" />
+        <BlockText text={data.description} />
+        <Rating text={data.reviews} number={data.ratingValue} color="dark" />
+      </View>
 
-        <MapView
-          style={styles.map}
-          initialRegion={{
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: data.location[0],
+          longitude: data.location[1],
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
+        }}
+      >
+        <MapView.Marker
+          coordinate={{
             latitude: data.location[0],
             longitude: data.location[1],
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
           }}
-        >
-          <MapView.Marker
-            coordinate={{
-              latitude: data.location[0],
-              longitude: data.location[1],
-            }}
-            title={data.title}
-          />
-        </MapView>
+          title={data.title}
+        />
+      </MapView>
 
-        <View style={styles.detailsContainer}>
-          <Title title="About the landlord" />
+      <View style={styles.detailsContainer}>
+        <Title title="About the landlord" />
 
-          <View style={styles.userContainer}>
-            <Picture url={data.user.account.photo.url} />
-            <View style={styles.texts}>
-              <View>
-                <SubTitle title="Name" />
-                <Text>{data.user.account.name}</Text>
-              </View>
-              <View>
-                <SubTitle title="Username" />
-                <Text>{data.user.account.username}</Text>
-              </View>
+        <View style={styles.userContainer}>
+          <Picture url={data.user.account.photo.url} />
+          <View style={styles.texts}>
+            <View>
+              <SubTitle title="Name" />
+              <Text>{data.user.account.name}</Text>
+            </View>
+            <View>
+              <SubTitle title="Username" />
+              <Text>{data.user.account.username}</Text>
             </View>
           </View>
-
-          <BlockText text={data.user.account.description} />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+
+        <BlockText text={data.user.account.description} />
+      </View>
+    </ScrollView>
   );
 };
 
 export default RoomScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.whiteColor,
-  },
   scrollView: {
     alignItems: "center",
+    backgroundColor: colors.whiteColor,
   },
   errorContainer: {
     alignItems: "center",
