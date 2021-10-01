@@ -1,15 +1,7 @@
-import React, { useState, useEffect } from "react";
-import {
-  Image,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
+// Icons
 import { MaterialIcons } from "@expo/vector-icons";
 
 const Favorite = () => {

@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from "react";
-import {
-  Image,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React from "react";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+
+// Colors
 import colors from "../utils/colors";
 
 // Icons

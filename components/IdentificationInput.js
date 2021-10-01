@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, TextInput } from "react-native";
+
+// Colors
 import colors from "../utils/colors";
 
 function IdentificationInput({

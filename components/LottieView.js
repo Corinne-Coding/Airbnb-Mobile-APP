@@ -1,5 +1,7 @@
 import React from "react";
-import { StyleSheet, View, Platform } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+// Lottie from "https://airbnb.design/lottie/"
 import LottieView from "lottie-react-native";
 
 export default class App extends React.Component {

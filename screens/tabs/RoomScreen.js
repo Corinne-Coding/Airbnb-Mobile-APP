@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     flexDirection: "row",
-    marginBottom: 15,
+    marginBottom: 25,
   },
   texts: {
     marginLeft: 20,

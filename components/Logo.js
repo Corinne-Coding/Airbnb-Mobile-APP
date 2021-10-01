@@ -1,15 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  Dimensions,
-  Image,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React from "react";
+import { Image, StyleSheet } from "react-native";
 
 const Logo = ({ withName, size }) => {
   return (

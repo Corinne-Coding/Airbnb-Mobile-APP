@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  ImageBackground,
   Dimensions,
+  ImageBackground,
   StyleSheet,
   Text,
   View,

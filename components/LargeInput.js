@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, TextInput } from "react-native";
+
+// Colors
 import colors from "../utils/colors";
 
 function LargeInput({ placeholder, value, setFunction }) {
@@ -16,8 +18,6 @@ function LargeInput({ placeholder, value, setFunction }) {
       scrollEnabled
       value={value}
       textAlignVertical="top"
-      //   underlineColorAndroid="transparent"
-      //   borderWidth={0}
       onChange={(event) => {
         const char = event.nativeEvent.text;
         setFunction(char);

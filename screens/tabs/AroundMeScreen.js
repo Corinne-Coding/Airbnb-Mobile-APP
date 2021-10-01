@@ -79,6 +79,11 @@ const AroundMeScreen = () => {
     }, [])
   );
 
+  const navigate = () => {
+    setSelectedRoom(null);
+    navigation.navigate("RoomAround", { roomId: selectedRoom.id });
+  };
+
   return isLoading ? (
     <ActivityIndicator
       size="large"
@@ -111,7 +116,6 @@ const AroundMeScreen = () => {
                   longitude: room.location[1],
                 }}
                 onPress={() => {
-                  console.log(room.photos[0].url);
                   setSelectedRoom({
                     id: room._id,
                     title: room.title,
@@ -127,9 +131,8 @@ const AroundMeScreen = () => {
       {selectedRoom && (
         <TouchableHighlight
           style={styles.card}
-          onPress={() =>
-            navigation.navigate("RoomAround", { roomId: selectedRoom.id })
-          }
+          underlayColor={colors.lightPinkAirbnb}
+          onPress={navigate}
         >
           <>
             <Image

@@ -1,5 +1,6 @@
 export default {
   pinkAirbnb: "#F35960",
+  lightPinkAirbnb: "#ecb5b7",
   whiteColor: "#fff",
   lightGrey: "#F2F3F5",
   mediumGrey: "#d6d6d6",

@@ -1,6 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+
+// Icons
 import { Entypo } from "@expo/vector-icons";
+
+// Colors
 import colors from "../utils/colors";
 
 function Rating({ number, text, color }) {
