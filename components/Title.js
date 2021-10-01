@@ -20,6 +20,5 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: "bold",
     color: colors.darkGrey,
-    marginBottom: 25,
   },
 });

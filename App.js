@@ -6,6 +6,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const RoomsStack = createNativeStackNavigator();
+const AroundStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
 const TabsStack = createBottomTabNavigator();
 const AuthStack = createNativeStackNavigator();
 
@@ -22,6 +24,9 @@ import SignInScreen from "./screens/connection/SignInScreen";
 import SignUpScreen from "./screens/connection/SignUpScreen";
 import SplashScreen from "./screens/SplashScreen";
 
+// Components
+import Logo from "./components/Logo";
+
 // Icons
 import { Entypo, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 
@@ -31,7 +36,7 @@ import colors from "./utils/colors";
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [, setUserId] = useState(null);
 
   const urlContext = useMemo(() => {
     return {
@@ -80,6 +85,13 @@ const App = () => {
     return <SplashScreen />;
   }
 
+  const screenOptionsObj = {
+    headerTitle: () => <Logo size="small" />,
+    headerTitleAlign: "center",
+    headerBackTitle: "",
+    headerTintColor: colors.darkGrey,
+  };
+
   const AuthStackScreen = () => (
     <AuthStack.Navigator
       screenOptions={{
@@ -96,7 +108,7 @@ const App = () => {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.pinkAirbnb,
-        tabBarInactiveTintColor: colors.darkGrey,
+        tabBarInactiveTintColor: colors.greyText,
       }}
     >
       <TabsStack.Screen
@@ -121,8 +133,8 @@ const App = () => {
       />
 
       <TabsStack.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="ProfileScreen"
+        component={ProfileStackScreen}
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
@@ -135,7 +147,7 @@ const App = () => {
 
   const RoomsStackScreen = () => {
     return (
-      <RoomsStack.Navigator>
+      <RoomsStack.Navigator screenOptions={screenOptionsObj}>
         <RoomsStack.Screen name="Rooms" component={HomeScreen} />
         <RoomsStack.Screen name="Room" component={RoomScreen} />
       </RoomsStack.Navigator>
@@ -144,10 +156,18 @@ const App = () => {
 
   const AroundStackScreen = () => {
     return (
-      <RoomsStack.Navigator>
-        <RoomsStack.Screen name="Map" component={AroundMeScreen} />
-        <RoomsStack.Screen name="RoomAround" component={RoomScreen} />
-      </RoomsStack.Navigator>
+      <AroundStack.Navigator screenOptions={screenOptionsObj}>
+        <AroundStack.Screen name="Map" component={AroundMeScreen} />
+        <AroundStack.Screen name="RoomAround" component={RoomScreen} />
+      </AroundStack.Navigator>
+    );
+  };
+
+  const ProfileStackScreen = () => {
+    return (
+      <ProfileStack.Navigator screenOptions={screenOptionsObj}>
+        <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+      </ProfileStack.Navigator>
     );
   };
 

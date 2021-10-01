@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   smallImage: {
-    height: 30,
+    height: 25,
+    width: 25,
   },
 });

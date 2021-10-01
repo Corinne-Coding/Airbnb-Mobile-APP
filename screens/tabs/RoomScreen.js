@@ -96,7 +96,10 @@ const RoomScreen = () => {
 
       <View style={styles.detailsContainer}>
         <Title title="About the accommodation" />
-        <BlockText text={data.description} />
+        <View style={{ marginTop: 25 }}>
+          <BlockText text={data.description} />
+        </View>
+
         <Rating text={data.reviews} number={data.ratingValue} color="dark" />
       </View>
 
@@ -163,7 +166,7 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     flexDirection: "row",
-    marginBottom: 25,
+    marginVertical: 25,
   },
   texts: {
     marginLeft: 20,

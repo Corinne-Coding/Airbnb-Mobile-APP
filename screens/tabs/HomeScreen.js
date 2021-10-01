@@ -21,7 +21,7 @@ function RoomsScreen() {
   const navigation = useNavigation();
   const { url } = useContext(UrlApiContext);
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [codeError, setCodeError] = useState(0);
 
@@ -42,7 +42,7 @@ function RoomsScreen() {
       };
 
       fetchData();
-    }, [])
+    }, [url])
   );
 
   return isLoading ? (

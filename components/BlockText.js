@@ -10,6 +10,7 @@ export default BlockText;
 const styles = StyleSheet.create({
   description: {
     fontSize: 14,
+    // marginTop: 25,
     marginBottom: 15,
     lineHeight: 18,
     textAlign: "justify",

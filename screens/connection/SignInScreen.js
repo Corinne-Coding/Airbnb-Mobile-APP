@@ -25,8 +25,8 @@ const SignInScreen = () => {
   const { handleId, handleToken } = useContext(AuthContext);
   const { url } = useContext(UrlApiContext);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("coco@gmail.com");
+  const [password, setPassword] = useState("passss");
   const [showPasswordIcon, setShowPasswordIcon] = useState(false);
   const [codeError, setCodeError] = useState(0);
   const [isRequestLoading, setIsRequestLoading] = useState(false);
