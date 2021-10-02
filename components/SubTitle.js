@@ -4,8 +4,14 @@ import { StyleSheet, Text } from "react-native";
 // Colors
 import colors from "../utils/colors";
 
-const SubTitle = ({ title }) => {
-  return <Text style={styles.text}>{title}</Text>;
+const SubTitle = ({ title, light }) => {
+  return (
+    <Text
+      style={light === true ? [styles.text, styles.lightColor] : styles.text}
+    >
+      {title}
+    </Text>
+  );
 };
 
 export default SubTitle;
@@ -17,5 +23,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.darkGrey,
     fontStyle: "italic",
+    width: "100%",
+  },
+  lightColor: {
+    color: colors.placeholderColor,
   },
 });

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -125,7 +125,7 @@ const RoomScreen = () => {
         <Title title="About the landlord" />
 
         <View style={styles.userContainer}>
-          <Picture url={data.user.account.photo.url} />
+          <Picture url={data.user.account.photo.url} mode="small square" />
           <View style={styles.texts}>
             <View>
               <SubTitle title="Name" />

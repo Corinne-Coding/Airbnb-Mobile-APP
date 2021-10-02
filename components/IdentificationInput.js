@@ -7,13 +7,14 @@ import colors from "../utils/colors";
 function IdentificationInput({
   autoCapitalize,
   keyboardType,
+  noMargin,
   placeholder,
   value,
   setFunction,
 }) {
   return (
     <TextInput
-      style={styles.textInput}
+      style={noMargin ? [styles.textInput, styles.noMg] : styles.textInput}
       autoCapitalize={autoCapitalize}
       autoCorrect={false}
       keyboardType={keyboardType}
@@ -38,5 +39,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 20,
     width: "80%",
+  },
+  noMg: {
+    marginVertical: 0,
   },
 });

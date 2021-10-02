@@ -4,10 +4,10 @@ import { StyleSheet, TextInput } from "react-native";
 // Colors
 import colors from "../utils/colors";
 
-function LargeInput({ placeholder, value, setFunction }) {
+function LargeInput({ noMargin, placeholder, value, setFunction }) {
   return (
     <TextInput
-      style={styles.textInput}
+      style={noMargin ? [styles.textInput, styles.noMg] : styles.textInput}
       autoCapitalize="sentences"
       autoCorrect={false}
       keyboardType="default"
@@ -37,5 +37,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingHorizontal: 10,
     marginVertical: 20,
+  },
+  noMg: {
+    marginVertical: 0,
   },
 });

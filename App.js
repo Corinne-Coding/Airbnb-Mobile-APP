@@ -36,7 +36,7 @@ import colors from "./utils/colors";
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
-  const [, setUserId] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const urlContext = useMemo(() => {
     return {
@@ -70,15 +70,17 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const checkTokenInSecureStore = async () => {
-      const result = await SecureStore.getItemAsync("airbnb-user-token");
-      setUserToken(result);
+    const checkValuesInSecureStore = async () => {
+      const token = await SecureStore.getItemAsync("airbnb-user-token");
+      const id = await SecureStore.getItemAsync("airbnb-user-id");
+      setUserToken(token);
+      setUserId(id);
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
     };
 
-    checkTokenInSecureStore();
+    checkValuesInSecureStore();
   }, []);
 
   if (isLoading) {
@@ -166,7 +168,9 @@ const App = () => {
   const ProfileStackScreen = () => {
     return (
       <ProfileStack.Navigator screenOptions={screenOptionsObj}>
-        <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+        <ProfileStack.Screen name="Profile">
+          {() => <ProfileScreen userId={userId} />}
+        </ProfileStack.Screen>
       </ProfileStack.Navigator>
     );
   };

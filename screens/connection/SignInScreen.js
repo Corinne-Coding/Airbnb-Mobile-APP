@@ -113,6 +113,7 @@ export default SignInScreen;
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
+    backgroundColor: colors.whiteColor,
   },
   container: {
     backgroundColor: colors.whiteColor,
