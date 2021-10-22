@@ -10,10 +10,10 @@ import { UrlApiContext } from "../../context";
 import colors from "../../utils/colors";
 
 // Components
-import PictureAndPrice from "../../components/PictureAndPrice";
 import ErrorMessage from "../../components/ErrorMessage";
 import LottieView from "../../components/LottieView";
 import Picture from "../../components/Picture";
+import PictureAndPrice from "../../components/PictureAndPrice";
 import Title from "../../components/Title";
 import Rating from "../../components/Rating";
 

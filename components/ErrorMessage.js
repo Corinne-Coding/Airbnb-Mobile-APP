@@ -14,6 +14,7 @@ function ErrorMessage({ codeError }) {
   // 5 : generic error response
   // 6 : password length
   // 7 : refresh app
+  // 8 : no informations
 
   const generateTextMessage = () => {
     if (typeof codeError === "string") {
@@ -36,6 +37,8 @@ function ErrorMessage({ codeError }) {
           return "Your password must be at least 6 characters long";
         case 7:
           return "An error occurred. Please refresh app";
+        case 8:
+          return "No informations to update";
       }
     }
   };

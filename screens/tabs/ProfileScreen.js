@@ -19,7 +19,7 @@ import SubTitle from "../../components/SubTitle";
 // Colors
 import colors from "../../utils/colors";
 
-const ProfileScreen = ({ userId }) => {
+const ProfileScreen = ({ userId, userToken }) => {
   const { handleId, handleToken } = useContext(AuthContext);
   const { url } = useContext(UrlApiContext);
 
@@ -30,18 +30,23 @@ const ProfileScreen = ({ userId }) => {
   const [userName, setUsername] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
+      // Get data about user
       const fetchData = async () => {
-        setCodeError(0);
+        setCodeError(1);
         try {
-          // console.log(`${url}users/${userId}`);
           const response = await axios.get(`${url}users/${userId}`);
-
           setData(response.data);
+          if (response.data.account.photo.url) {
+            setUserPicture(response.data.account.photo.url);
+          }
+          setName(response.data.account.name);
+          setUsername(response.data.account.username);
+          setDescription(response.data.account.description);
           setIsLoading(false);
-          setUserPicture(response.data.account.photo);
         } catch (error) {
           setCodeError(7);
           setIsLoading(false);
@@ -65,7 +70,7 @@ const ProfileScreen = ({ userId }) => {
         setUserPicture(pickerResult.uri);
       } else return;
     } catch (error) {
-      console.log(error);
+      setCodeError(5);
       return;
     }
   };
@@ -85,13 +90,67 @@ const ProfileScreen = ({ userId }) => {
         setUserPicture(pickerResult.uri);
       } else return;
     } catch (error) {
-      console.log(error);
+      setCodeError(5);
       return;
     }
   };
 
   const removePicture = () => {
     setUserPicture(null);
+  };
+
+  const updateInformations = async () => {
+    setIsUpdateLoading(true);
+    try {
+      setCodeError(0);
+      // create FormData
+      const formData = new FormData();
+      if (userPicture) {
+        const uriParts = userPicture.split(".");
+        const fileType = uriParts[uriParts.length - 1];
+        formData.append("picture", {
+          uri: userPicture,
+          name: `photo.${fileType}`,
+          type: `image/${fileType}`,
+        });
+      }
+
+      formData.append("description", description);
+      formData.append("username", userName);
+      formData.append("name", name);
+
+      // options for request
+      const options = {
+        method: "PUT",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + userToken,
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      // request
+      const response = await fetch(`${url}user/update/${userId}`, options);
+
+      const JSONResponse = await response.json();
+      setData(JSONResponse);
+      if (JSONResponse.account.photo.url) {
+        setUserPicture(JSONResponse.account.photo.url);
+      }
+      setName(JSONResponse.account.name);
+      setUsername(JSONResponse.account.username);
+      setDescription(JSONResponse.account.description);
+      setIsUpdateLoading(false);
+    } catch (e) {
+      setCodeError(7);
+      setIsUpdateLoading(false);
+    }
+  };
+
+  const logOut = () => {
+    handleId();
+    handleToken();
   };
 
   return isLoading ? (
@@ -122,9 +181,9 @@ const ProfileScreen = ({ userId }) => {
         </View>
         <IdentificationInput
           noMargin={true}
-          value={data.account.name}
-          // keyboardType="default"
-          // setFunction={setName}
+          value={name}
+          keyboardType="default"
+          setFunction={setName}
         />
 
         <View style={styles.subTitleContainer}>
@@ -132,9 +191,9 @@ const ProfileScreen = ({ userId }) => {
         </View>
         <IdentificationInput
           noMargin={true}
-          value={data.account.username}
-          // keyboardType="default"
-          // setFunction={setUsername}
+          value={userName}
+          keyboardType="default"
+          setFunction={setUsername}
         />
 
         <View style={styles.subTitleContainer}>
@@ -142,13 +201,18 @@ const ProfileScreen = ({ userId }) => {
         </View>
         <LargeInput
           noMargin={true}
-          value={data.account.description}
-          // setFunction={setDescription}
+          value={description}
+          setFunction={setDescription}
         />
       </View>
 
-      <Button text="Update informations" />
-      <Button text="Sign out" />
+      <ErrorMessage codeError={codeError} />
+      <Button
+        text="Update informations"
+        submitFunction={updateInformations}
+        isRequestLoading={isUpdateLoading}
+      />
+      <Button text="Sign out" submitFunction={logOut} />
     </ScrollView>
   );
 };
@@ -172,7 +236,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     paddingTop: 40,
-    marginBottom: 50,
+    marginBottom: 20,
   },
   subTitleContainer: {
     width: "80%",

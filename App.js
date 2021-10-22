@@ -40,7 +40,8 @@ const App = () => {
 
   const urlContext = useMemo(() => {
     return {
-      url: "http://192.168.1.12:3000/",
+      url: "http://192.168.86.28:3000/", // HOME
+      // url: "http://192.168.1.12:3000/", // REACTEUR
       // url: "https://airbnb-api-corinne.herokuapp.com/",
     };
   });
@@ -82,6 +83,20 @@ const App = () => {
 
     checkValuesInSecureStore();
   }, []);
+
+  // useEffect(() => {
+  //   const clearSecureStore = async () => {
+  //     await SecureStore.deleteItemAsync("airbnb-user-token");
+  //     await SecureStore.deleteItemAsync("airbnb-user-id");
+  //     setUserToken(null);
+  //     setUserId(null);
+  //     setTimeout(() => {
+  //       setIsLoading(false);
+  //     }, 1000);
+  //   };
+
+  //   clearSecureStore();
+  // }, []);
 
   if (isLoading) {
     return <SplashScreen />;
@@ -169,7 +184,7 @@ const App = () => {
     return (
       <ProfileStack.Navigator screenOptions={screenOptionsObj}>
         <ProfileStack.Screen name="Profile">
-          {() => <ProfileScreen userId={userId} />}
+          {() => <ProfileScreen userId={userId} userToken={userToken} />}
         </ProfileStack.Screen>
       </ProfileStack.Navigator>
     );
