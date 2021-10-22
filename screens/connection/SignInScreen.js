@@ -38,7 +38,6 @@ const SignInScreen = () => {
       setIsRequestLoading(true);
       try {
         // request
-        console.log(`${url}user/log_in`);
         const response = await axios.post(`${url}user/log_in`, {
           email: email,
           password: password,
