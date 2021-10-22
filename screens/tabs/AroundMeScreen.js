@@ -35,7 +35,6 @@ const AroundMeScreen = () => {
   useFocusEffect(
     useCallback(() => {
       const getLocationAndFetchData = async () => {
-        console.log("00");
         try {
           setCodeError(0);
           setSelectedRoom(null);
@@ -45,7 +44,6 @@ const AroundMeScreen = () => {
           const { status } = await Location.requestForegroundPermissionsAsync();
 
           if (status === "granted") {
-            console.log("01");
             // get location
 
             let coords;
@@ -55,32 +53,22 @@ const AroundMeScreen = () => {
               coords = await Location.getLastKnownPositionAsync();
             }
 
-            console.log(coords);
-
             setUserCoordinates({
               latitude: coords.coords.latitude,
               longitude: coords.coords.longitude,
             });
 
             // get data around user
-            console.log("02");
-            console.log(
-              `${url}rooms/around?latitude=${coords.coords.latitude}&longitude=${coords.coords.longitude}`
-            );
             response = await axios.get(
               `${url}rooms/around?latitude=${coords.coords.latitude}&longitude=${coords.coords.longitude}`
             );
           } else {
-            console.log("03");
-            console.log(`${url}rooms/around`);
             // get all data
             response = await axios.get(`${url}rooms/around`);
           }
-
           setData(response.data);
           setIsLoading(false);
         } catch (error) {
-          console.log("04");
           setCodeError(7);
           setIsLoading(false);
         }
