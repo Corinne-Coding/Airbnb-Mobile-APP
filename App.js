@@ -85,19 +85,19 @@ const App = () => {
   }, []);
 
   // Clear Secure Store
-  useEffect(() => {
-    const clearSecureStore = async () => {
-      await SecureStore.deleteItemAsync("airbnb-user-token");
-      await SecureStore.deleteItemAsync("airbnb-user-id");
-      setUserToken(null);
-      setUserId(null);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    };
+  // useEffect(() => {
+  //   const clearSecureStore = async () => {
+  //     await SecureStore.deleteItemAsync("airbnb-user-token");
+  //     await SecureStore.deleteItemAsync("airbnb-user-id");
+  //     setUserToken(null);
+  //     setUserId(null);
+  //     setTimeout(() => {
+  //       setIsLoading(false);
+  //     }, 1000);
+  //   };
 
-    clearSecureStore();
-  }, []);
+  //   clearSecureStore();
+  // }, []);
 
   if (isLoading) {
     return <SplashScreen />;
