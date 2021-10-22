@@ -40,9 +40,9 @@ const App = () => {
 
   const urlContext = useMemo(() => {
     return {
-      url: "http://192.168.86.28:3000/", // HOME
+      // url: "http://192.168.86.28:3000/", // HOME
       // url: "http://192.168.1.12:3000/", // REACTEUR
-      // url: "https://airbnb-api-corinne.herokuapp.com/",
+      url: "https://airbnb-api-corinne.herokuapp.com/",
     };
   });
 

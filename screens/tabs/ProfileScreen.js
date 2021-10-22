@@ -36,7 +36,7 @@ const ProfileScreen = ({ userId, userToken }) => {
     useCallback(() => {
       // Get data about user
       const fetchData = async () => {
-        setCodeError(1);
+        setCodeError(0);
         try {
           const response = await axios.get(`${url}users/${userId}`);
           setData(response.data);
