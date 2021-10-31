@@ -22,7 +22,7 @@ The Airbnb App project is a **fullstack** mobile project made in 2021.
 
 If you want to take a look at the backend project (Node.js server), follow this link : [Airbnb API](https://github.com/Corinne-Coding/Airbnb-API)
 
-<p align="center">
+<p align="center" background-color="red">
 <img width="250" alt="Memory game project" src="https://github.com/Corinne-Coding/Airbnb-Mobile-APP/blob/main/assets/preview/SignInScreen.png" />
 <img width="250" alt="Memory game project" src="https://github.com/Corinne-Coding/Airbnb-Mobile-APP/blob/main/assets/preview/SignUpScreen.png" />
 <img width="250" alt="Memory game project" src="https://github.com/Corinne-Coding/Airbnb-Mobile-APP/blob/main/assets/preview/HomeScreen.png" />
