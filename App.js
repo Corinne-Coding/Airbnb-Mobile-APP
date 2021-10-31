@@ -48,23 +48,17 @@ const App = () => {
 
   const authContext = useMemo(() => {
     return {
-      handleToken: async (token) => {
-        if (token) {
+      handleTokenAndId: async (token, id) => {
+        if (token && id) {
           await SecureStore.setItemAsync("airbnb-user-token", token);
-          setUserToken(token);
-        } else {
-          await SecureStore.deleteItemAsync("airbnb-user-token");
-          setUserToken(null);
-        }
-      },
-
-      handleId: async (id) => {
-        if (id) {
           await SecureStore.setItemAsync("airbnb-user-id", id);
           setUserId(id);
+          setUserToken(token);
         } else {
           await SecureStore.deleteItemAsync("airbnb-user-id");
+          await SecureStore.deleteItemAsync("airbnb-user-token");
           setUserId(null);
+          setUserToken(null);
         }
       },
     };

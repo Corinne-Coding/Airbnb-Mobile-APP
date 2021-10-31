@@ -20,7 +20,7 @@ import SubTitle from "../../components/SubTitle";
 import colors from "../../utils/colors";
 
 const ProfileScreen = ({ userId, userToken }) => {
-  const { handleId, handleToken } = useContext(AuthContext);
+  const { handleId, handleTokenAndId } = useContext(AuthContext);
   const { url } = useContext(UrlApiContext);
 
   const [data, setData] = useState(null);
@@ -149,8 +149,7 @@ const ProfileScreen = ({ userId, userToken }) => {
   };
 
   const logOut = () => {
-    handleId();
-    handleToken();
+    handleTokenAndId();
   };
 
   return isLoading ? (

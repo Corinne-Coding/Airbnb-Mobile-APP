@@ -26,7 +26,7 @@ import validateEmailFormat from "../../utils/functions/validateEmailFormat";
 import colors from "../../utils/colors";
 
 const SignUpScreen = () => {
-  const { handleId, handleToken } = useContext(AuthContext);
+  const { handleId, handleTokenAndId } = useContext(AuthContext);
   const { url } = useContext(UrlApiContext);
 
   const [email, setEmail] = useState("");
@@ -70,8 +70,7 @@ const SignUpScreen = () => {
               });
 
               if (response.data.token && response.data._id) {
-                handleToken(response.data.token);
-                handleId(response.data._id);
+                handleTokenAndId(response.data.token, response.data._id);
               } else {
                 setCodeError(5);
               }
